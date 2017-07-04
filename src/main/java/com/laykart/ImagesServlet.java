@@ -134,7 +134,8 @@ public class ImagesServlet extends HttpServlet {
 		String[] productSmall = null;
 		String[] banner = null;
 		String[] sourceFolder = null;
-		
+		String imageFormat = null;
+		String imageFormat2 = null;
 		
 		Date startDate = new Date();
 
@@ -215,9 +216,20 @@ public class ImagesServlet extends HttpServlet {
 						
 						String objectName = object.getName();
 						if (objectName.endsWith(".png") || objectName.endsWith(".jpg")) {
+							
+							if(objectName.endsWith(".png")){
+							imageFormat = ".png";
+							}
+							if(objectName.endsWith(".jpg")){
+							imageFormat = ".jpg";
+							}
+							
 							objectName = objectName.substring(7, (objectName.length() - 4));
 							System.out.println(objectName);
 						} else if (objectName.endsWith(".jpeg")) {
+							
+							imageFormat = ".jpeg";
+							
 							objectName = objectName.substring(7, (objectName.length() - 5));
 							System.out.println(objectName);
 						}
@@ -263,7 +275,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(thumbnailDestinationFolder[j],
-											objectName + "_" + width + "x" + height + ".jpeg"),
+										objectName + "_" + width + "x" + height + imageFormat),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage1.getImageData()));
 
@@ -285,7 +297,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(productDetailDestinationFolder[j],
-											objectName + "_" + width + "x" + height + ".jpeg"),
+										objectName + "_" + width + "x" + height + imageFormat ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage1_5.getImageData()));
 
@@ -307,7 +319,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(productSmallDestinationFolder[j],
-											objectName + "_" + width + "x" + height + ".jpeg"),
+										objectName + "_" + width + "x" + height + imageFormat ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage2.getImageData()));
 
@@ -347,9 +359,20 @@ public class ImagesServlet extends HttpServlet {
 						
 						String objectName2 = object.getName();
 						if (objectName2.endsWith(".png") || objectName2.endsWith(".jpg")) {
+							
+							if(objectName2.endsWith(".png")){
+							imageFormat2 = ".png";
+							}
+							if(objectName2.endsWith(".jpg")){
+							imageFormat2 = ".jpg";
+							}
 							objectName2 = objectName2.substring(13, (objectName2.length() - 4));
 							System.out.println(objectName2);
 						} else if (objectName2.endsWith(".jpeg")) {
+							
+							if(objectName2.endsWith(".jpeg")){
+							imageFormat2 = ".jpeg";
+							}
 							objectName2 = objectName2.substring(13, (objectName2.length() - 5));
 							System.out.println(objectName2);
 						}
@@ -378,7 +401,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(bannerDestinationFolder[j],
-											objectName2 + "_" + width + "x" + height + ".jpeg"),
+											objectName2 + "_" + width + "x" + height + imageFormat2 ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage33.getImageData()));
 
