@@ -275,7 +275,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(thumbnailDestinationFolder[j],
-										objectName + "_" + width + "x" + height + imageFormat),
+										objectName  + imageFormat),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage1.getImageData()));
 
@@ -297,7 +297,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(productDetailDestinationFolder[j],
-										objectName + "_" + width + "x" + height + imageFormat ),
+										objectName  + imageFormat ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage1_5.getImageData()));
 
@@ -319,7 +319,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(productSmallDestinationFolder[j],
-										objectName + "_" + width + "x" + height + imageFormat ),
+										objectName + imageFormat ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage2.getImageData()));
 
@@ -401,7 +401,7 @@ public class ImagesServlet extends HttpServlet {
 							// Storage object.
 							gcsService.createOrReplace(
 									new GcsFilename(bannerDestinationFolder[j],
-											objectName2 + "_" + width + "x" + height + imageFormat2 ),
+											objectName2  + imageFormat2 ),
 									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 									ByteBuffer.wrap(resizeImage33.getImageData()));
 
