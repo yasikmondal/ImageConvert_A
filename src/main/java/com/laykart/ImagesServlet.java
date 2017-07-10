@@ -212,7 +212,7 @@ public class ImagesServlet extends HttpServlet {
 				String path = object.getName();
 				System.out.println("**********" + path);
 				if (path.startsWith(sourceImageFolder)) {
-					if ("image/png".equals(object.getContentType())) {
+				if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
 						
 						String objectName = object.getName();
 						if (objectName.endsWith(".png") || objectName.endsWith(".jpg")) {
@@ -352,10 +352,10 @@ public class ImagesServlet extends HttpServlet {
 				}
 				
 				//Start Banner Folder
-				System.out.println("Type::::::::::::::::::: " + object.getContentType());
+				//System.out.println("Type::::::::::::::::::: " + object.getContentType());
 				if (path.startsWith(sourceImageBannerFolder)) {
-					if ("image/png".equals(object.getContentType())) {
-						System.out.println("BannerIm age Type::::::::::::::::::: " + object.getContentType());
+					if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
+						System.out.println("BannerImage Type::::::::::::::::::: " + object.getContentType());
 						
 						
 						String objectName2 = object.getName();
