@@ -355,6 +355,7 @@ public class ImagesServlet extends HttpServlet {
 				
 				if (path.startsWith(sourceImageBannerFolder)) {
 					if ("image/png".equals(object.getContentType())) {
+						System.out.println("BannerIm age Type::::::::::::::::::: " + object.getContentType());
 						
 						
 						String objectName2 = object.getName();
