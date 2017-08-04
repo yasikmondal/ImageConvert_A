@@ -25,7 +25,12 @@
 </head>
 <body style="background:#106cc8; ">
      <!-- <h1>Hello App Engine -- Standard!</h1> -->
-<div style="margin: 20% 3%;color:#fff;font-size: 4em;Background: rgba(47, 130, 212, 0.75);width: 83%;padding: 50px;height: auto;box-shadow: 0px 0px 11px 11px #ccc;">
+<div style="
+    margin: 10% 31%;
+">
+    <div style="color: white;text-align: center;margin-top: 50px;/* position: absolute; */"><h1>Leykart Image Resize Tool </h1>
+    </div>
+   <div style="/* margin: 20% 3%; */color:#fff;font-size: 2em;Background: rgba(47, 130, 212, 0.75);width: 83%;padding: 50px;height: auto;box-shadow: 0px 0px 11px 11px #ccc;">
 <table>
      <tbody><tr>
       
@@ -53,6 +58,6 @@
     
     
     
-    </tbody></table></div>
+    </tbody></table></div></div>
 </body>
 </html>
