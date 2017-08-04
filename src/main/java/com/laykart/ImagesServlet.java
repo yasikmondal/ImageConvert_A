@@ -130,7 +130,7 @@ public class ImagesServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
 		PrintWriter out = resp.getWriter();
-		out.println("<div id="msg">data is loading...</div>");
+		out.println("<div id='msg'>data is loading...</div>");
 
 		String[] thumbnail = null;
 		String[] productDetail = null;
@@ -466,7 +466,7 @@ public class ImagesServlet extends HttpServlet {
 
 		out.println("<table><tr><th>Days</th><th>Hours</th><th>Minutes</th><th>Seconds</th></tr><tr><td>" + days
 				+ "</td><td>" + hours + "</td><td>" + mini + "</td><td>" + sec + "</td></tr></table>");
-		out.println("<script> $("msg").remove(); </script>");
+		out.println("<script> $('msg').remove(); </script>");
 	}
 
 }
