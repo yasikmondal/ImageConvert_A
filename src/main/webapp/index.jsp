@@ -21,12 +21,12 @@
 <html>
 <head>
   <link href='//fonts.googleapis.com/css?family=Marmelad' rel='stylesheet' type='text/css'>
-  <title>Hello App Engine Standard</title>
+  <!--<title>Hello App Engine Standard</title> -->
 </head>
 <body>
-    <h1>Hello App Engine -- Standard!</h1>
+     <!-- <h1>Hello App Engine -- Standard!</h1> -->
 
-  <p>This is <%= HelloInfo.getInfo() %>.</p>
+  
   <table>
      <tr>
       <td colspan="2" style="font-weight:bold;">IMAGES PROCESSING SERVLET:</td>
