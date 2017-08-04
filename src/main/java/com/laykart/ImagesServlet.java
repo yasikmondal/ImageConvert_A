@@ -457,15 +457,16 @@ public class ImagesServlet extends HttpServlet {
 		// in the browser.
 		PrintWriter out = resp.getWriter();
 		out.println("<html><body>\n");
-
+		out.println("<div style='margin: 10% 3%;color:#fff;font-size: 4em;Background: rgba(47, 130, 212, 0.75);width: 83%;padding: 50px;height: auto;box-shadow: 0px 0px 11px 11px #ccc;'>");
 		out.println("Converted Successfully !! Please check in cloud storage \n <br>");
 		out.println("\n");
 		out.println("\n");
 		out.println("\nConversion Time: \n");
 		out.println("\n");
 
-		out.println("<table><tr><th>Days</th><th>Hours</th><th>Minutes</th><th>Seconds</th></tr><tr><td>" + days
+		out.println("<table style='border: 12px;width: 30%;color: white;font-size: 30px;margin: 10px;'><tr><th>Days</th><th>Hours</th><th>Minutes</th><th>Seconds</th></tr><tr><td>" + days
 				+ "</td><td>" + hours + "</td><td>" + mini + "</td><td>" + sec + "</td></tr></table>");
+		out.println("</div>");
 		
 	}
 
