@@ -128,6 +128,9 @@ public class ImagesServlet extends HttpServlet {
 	@SuppressWarnings("resource")
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		
+		PrintWriter out = resp.getWriter();
+		out.println("<div id="msg">data is loading...</div>");
 
 		String[] thumbnail = null;
 		String[] productDetail = null;
@@ -452,7 +455,7 @@ public class ImagesServlet extends HttpServlet {
 		// Output some simple HTML to display the images we wrote to Cloud
 		// Storage
 		// in the browser.
-		PrintWriter out = resp.getWriter();
+		
 		out.println("<html><body>\n");
 
 		out.println("Converted Successfully !! Please check in cloud storage \n <br>");
@@ -463,7 +466,7 @@ public class ImagesServlet extends HttpServlet {
 
 		out.println("<table><tr><th>Days</th><th>Hours</th><th>Minutes</th><th>Seconds</th></tr><tr><td>" + days
 				+ "</td><td>" + hours + "</td><td>" + mini + "</td><td>" + sec + "</td></tr></table>");
-
+		out.println("<script> $("msg").remove(); </script>");
 	}
 
 }
