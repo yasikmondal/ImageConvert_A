@@ -129,8 +129,8 @@ public class ImagesServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
-		PrintWriter out = resp.getWriter();
-		out.println("<div id='msg'>data is loading...</div>");
+		
+		
 
 		String[] thumbnail = null;
 		String[] productDetail = null;
@@ -293,7 +293,7 @@ public class ImagesServlet extends HttpServlet {
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
 
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height, false);
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height);
 							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
 
 							// Write the transformed image back to a Cloud
@@ -455,7 +455,7 @@ public class ImagesServlet extends HttpServlet {
 		// Output some simple HTML to display the images we wrote to Cloud
 		// Storage
 		// in the browser.
-		
+		PrintWriter out = resp.getWriter();
 		out.println("<html><body>\n");
 
 		out.println("Converted Successfully !! Please check in cloud storage \n <br>");
@@ -466,7 +466,7 @@ public class ImagesServlet extends HttpServlet {
 
 		out.println("<table><tr><th>Days</th><th>Hours</th><th>Minutes</th><th>Seconds</th></tr><tr><td>" + days
 				+ "</td><td>" + hours + "</td><td>" + mini + "</td><td>" + sec + "</td></tr></table>");
-		out.println("<script> $('msg').remove(); </script>");
+		
 	}
 
 }
