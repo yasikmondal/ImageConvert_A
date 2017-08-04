@@ -23,17 +23,19 @@
   <link href='//fonts.googleapis.com/css?family=Marmelad' rel='stylesheet' type='text/css'>
   <!--<title>Hello App Engine Standard</title> -->
 </head>
-<body>
+<body style="background:#106cc8; ">
      <!-- <h1>Hello App Engine -- Standard!</h1> -->
-
-  
-  <table>
-     <tr>
-      <td colspan="2" style="font-weight:bold;">IMAGES PROCESSING SERVLET:</td>
+<div style="margin: 20% 3%;color:#fff;font-size: 4em;Background: rgba(47, 130, 212, 0.75);width: 83%;padding: 50px;height: auto;box-shadow: 0px 0px 11px 11px #ccc;">
+<table>
+     <tbody><tr>
+      
     </tr>
      
     <tr>
-      <td><a href='/image'>Click me to convert</a></td>
+      <td><a href="/image" style="
+    text-decoration: none;
+    color: #fff;
+">Click Here To Convert Images</a></td>
     </tr>
     <tr>
     <!-- <td>
@@ -51,7 +53,6 @@
     
     
     
-  </table>
-	
+    </tbody></table></div>
 </body>
 </html>
