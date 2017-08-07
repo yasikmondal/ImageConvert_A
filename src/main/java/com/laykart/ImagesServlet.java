@@ -78,7 +78,7 @@ public class ImagesServlet extends HttpServlet {
 	String movedFolderBanner = null;
 	String sourceImageBannerFolder = null;
 	byte[] imageBytes1 = null;
-	String imgPath = "https://storage.cloud.google.com/leykart-resized-images/";
+	String imgPath = "https://storage.googleapis.com/";
 
 	// [START gcs]
 
