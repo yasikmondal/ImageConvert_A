@@ -249,6 +249,8 @@ public class ImagesServlet extends HttpServlet {
 						} catch (URISyntaxException e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
+						} catch(MalformedURLException e3){
+							e3.printStackTrace();
 						}
 						FileInputStream fileInputStream2 = new FileInputStream(file2);
 						FileChannel fileChannel2 = fileInputStream2.getChannel();
