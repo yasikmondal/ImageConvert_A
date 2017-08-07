@@ -246,12 +246,10 @@ public class ImagesServlet extends HttpServlet {
 
 						try {
 							file2 = new File(resource2.toURI());
-						} catch (URISyntaxException e2) {
+						} catch (Exception e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
-						} catch(MalformedURLException e3){
-							e3.printStackTrace();
-						}
+						} 
 						FileInputStream fileInputStream2 = new FileInputStream(file2);
 						FileChannel fileChannel2 = fileInputStream2.getChannel();
 						ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
