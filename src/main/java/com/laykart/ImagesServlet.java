@@ -54,7 +54,9 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesService.OutputEncoding;
 import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.OutputSettings;
 import com.google.appengine.api.images.Transform;
 import com.google.appengine.repackaged.org.joda.time.Instant;
 import com.google.appengine.repackaged.org.joda.time.Interval;
@@ -220,13 +222,16 @@ public class ImagesServlet extends HttpServlet {
 				if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
 						
 						String objectName = object.getName();
+						OutputEncoding oe;
 						if (objectName.endsWith(".png") || objectName.endsWith(".jpg")) {
 							
 							if(objectName.endsWith(".png")){
 							imageFormat = ".png";
+							oe = OutputEncoding.PNG;
 							}
 							if(objectName.endsWith(".jpg")){
 							imageFormat = ".jpg";
+							oe = OutputEncoding.JPEG;
 							}
 							
 							objectName = objectName.substring(7, (objectName.length() - 4));
@@ -234,39 +239,14 @@ public class ImagesServlet extends HttpServlet {
 						} else if (objectName.endsWith(".jpeg")) {
 							
 							imageFormat = ".jpeg";
+							oe = OutputEncoding.JPEG;
 							
 							objectName = objectName.substring(7, (objectName.length() - 5));
 							System.out.println(objectName);
 						}
 					
-						ServletContext context = getServletContext();
-						String imageUrl=imgPath + object.getName();
-						URL resource2 = context.getResource(imgPath + object.getName());
-						File file2 = null;
-
-						try {
-							file2 = new File(resource2.toURI());
-						} catch (Exception e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						} 
-						FileInputStream fileInputStream2 = new FileInputStream(file2);
-						FileChannel fileChannel2 = fileInputStream2.getChannel();
-						ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
-						fileChannel2.read(byteBuffer2);
-
-						imageBytes1 = byteBuffer2.array();
-						
-						Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
-						Transform resizee = ImagesServiceFactory.makeResize(100, 50);
-						
-						Image resizedImagee = imagesService.applyTransform(resizee, imagee);
-
-						// Write the transformed image back to a Cloud Storage
-						// object.
-						gcsService.createOrReplace(new GcsFilename(bucket, "resizedImage_100X50"+ imageFormat),
-								new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-								ByteBuffer.wrap(resizedImagee.getImageData()));
+						OutputSettings oss = new OutputSettings(oe);
+						oss.setQuality(100);
 
 						// Create a temp file to upload
 						// Path tempPath = Files.createTempFile("StorageSample",
