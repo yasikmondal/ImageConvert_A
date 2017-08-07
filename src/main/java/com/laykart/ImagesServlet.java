@@ -262,7 +262,10 @@ public class ImagesServlet extends HttpServlet {
 						Image blobImage = ImagesServiceFactory.makeImageFromBlob(blobKey); // Create
 
 						// For Thumbnail
-						
+						System.out.println(" BLOG IMAGE NAME : " + blobImage);
+						System.out.println(" DESTINATION FOLDER NAME : " + movedFolderBanner);
+						System.out.println(" IMAGE FORMAT : " + imageFormat);
+					
 						gcsService.createOrReplace(
 								new GcsFilename(movedFolderBanner, objectName+ imageFormat),
 								new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
