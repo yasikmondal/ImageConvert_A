@@ -143,6 +143,7 @@ public class ImagesServlet extends HttpServlet {
 		String[] sourceFolder = null;
 		String imageFormat = null;
 		String imageFormat2 = null;
+		OutputEncoding oe;
 		
 		Date startDate = new Date();
 
@@ -222,7 +223,7 @@ public class ImagesServlet extends HttpServlet {
 				if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
 						
 						String objectName = object.getName();
-						OutputEncoding oe;
+						
 						if (objectName.endsWith(".png") || objectName.endsWith(".jpg")) {
 							
 							if(objectName.endsWith(".png")){
