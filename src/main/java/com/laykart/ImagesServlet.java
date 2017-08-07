@@ -263,7 +263,10 @@ public class ImagesServlet extends HttpServlet {
 
 						// For Thumbnail
 						
-						
+						gcsService.createOrReplace(
+								new GcsFilename(movedFolderBanner, objectName+ imageFormat),
+								new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
+								ByteBuffer.wrap(blobImage.getImageData()));
 						
 						for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
 
