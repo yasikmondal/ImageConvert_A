@@ -236,6 +236,30 @@ public class ImagesServlet extends HttpServlet {
 							objectName = objectName.substring(7, (objectName.length() - 5));
 							System.out.println(objectName);
 						}
+					
+						ServletContext context = getServletContext();
+						String imageUrl=imgPath + object.getName();
+						URL resource2 = context.getResource(imgPath + object.getName());
+						File file2 = null;
+
+						file2 = new File(resource2.toURI());
+						FileInputStream fileInputStream2 = new FileInputStream(file2);
+						FileChannel fileChannel2 = fileInputStream2.getChannel();
+						ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
+						fileChannel2.read(byteBuffer2);
+
+						imageBytes1 = byteBuffer2.array();
+						
+						Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
+						Transform resizee = ImagesServiceFactory.makeResize(100, 50);
+						
+						Image resizedImagee = imagesService.applyTransform(resizee, imagee);
+
+						// Write the transformed image back to a Cloud Storage
+						// object.
+						gcsService.createOrReplace(new GcsFilename(bucket, "resizedImage_100X50"+ imageFormat),
+								new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
+								ByteBuffer.wrap(resizedImagee.getImageData()));
 
 						// Create a temp file to upload
 						// Path tempPath = Files.createTempFile("StorageSample",
@@ -262,14 +286,7 @@ public class ImagesServlet extends HttpServlet {
 						Image blobImage = ImagesServiceFactory.makeImageFromBlob(blobKey); // Create
 
 						// For Thumbnail
-						System.out.println(" BLOG IMAGE NAME : " + blobImage);
-						System.out.println(" DESTINATION FOLDER NAME : " + movedFolderBanner);
-						System.out.println(" IMAGE FORMAT : " + imageFormat);
-					
-						gcsService.createOrReplace(
-								new GcsFilename(movedFolderBanner, objectName+ imageFormat),
-								new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-								ByteBuffer.wrap(blobImage.getImageData()));
+						
 						
 						for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
 
