@@ -143,7 +143,7 @@ public class ImagesServlet extends HttpServlet {
 		String[] sourceFolder = null;
 		String imageFormat = null;
 		String imageFormat2 = null;
-		OutputEncoding oe;
+		OutputEncoding oe = null;
 		
 		Date startDate = new Date();
 
