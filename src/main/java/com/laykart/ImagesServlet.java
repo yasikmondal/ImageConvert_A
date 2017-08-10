@@ -80,7 +80,7 @@ public class ImagesServlet extends HttpServlet {
 	String movedFolderBanner = null;
 	String sourceImageBannerFolder = null;
 	byte[] imageBytes1 = null;
-	String imgPath = "https://storage.googleapis.com/leykart-images/"; 
+	//String imgPath = "https://storage.googleapis.com/leykart-images/"; 
 
 	// [START gcs]
 
@@ -143,7 +143,7 @@ public class ImagesServlet extends HttpServlet {
 		String[] sourceFolder = null;
 		String imageFormat = null;
 		String imageFormat2 = null;
-		OutputEncoding oe = null;
+		//OutputEncoding oe = null;
 		
 		Date startDate = new Date();
 
@@ -228,11 +228,11 @@ public class ImagesServlet extends HttpServlet {
 							
 							if(objectName.endsWith(".png")){
 							imageFormat = ".png";
-							oe = OutputEncoding.PNG;
+							//oe = OutputEncoding.PNG;
 							}
 							if(objectName.endsWith(".jpg")){
 							imageFormat = ".jpg";
-							oe = OutputEncoding.JPEG;
+							//oe = OutputEncoding.JPEG;
 							}
 							
 							objectName = objectName.substring(7, (objectName.length() - 4));
@@ -240,14 +240,14 @@ public class ImagesServlet extends HttpServlet {
 						} else if (objectName.endsWith(".jpeg")) {
 							
 							imageFormat = ".jpeg";
-							oe = OutputEncoding.JPEG;
+							//oe = OutputEncoding.JPEG;
 							
 							objectName = objectName.substring(7, (objectName.length() - 5));
 							System.out.println(objectName);
 						}
 					
-						OutputSettings oss = new OutputSettings(oe);
-						oss.setQuality(100);
+						//OutputSettings oss = new OutputSettings(oe);
+						//oss.setQuality(100);
 
 						// Create a temp file to upload
 						// Path tempPath = Files.createTempFile("StorageSample",
@@ -304,8 +304,8 @@ public class ImagesServlet extends HttpServlet {
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
 
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height);
-							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage, oss);
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, 0 , true);
+							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
 
 							// Write the transformed image back to a Cloud
 							// Storage object.
