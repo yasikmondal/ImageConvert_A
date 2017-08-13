@@ -304,8 +304,17 @@ public class ImagesServlet extends HttpServlet {
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
 
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, 0 , true);
-							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
+							Transform resize33=ImagesServiceFactory.makeCrop(0, 1375, 0, 125);
+							Image resizeImage331_5 = imagesService.applyTransform(resize33, blobImage);
+							
+							gcsService.createOrReplace(
+									new GcsFilename(productDetailDestinationFolder[j],
+										objectName  + imageFormat + "_125x125"),
+									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
+									ByteBuffer.wrap(resizeImage331_5.getImageData()));
+							
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height );
+							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, resizeImage331_5);
 
 							// Write the transformed image back to a Cloud
 							// Storage object.
