@@ -304,7 +304,7 @@ public class ImagesServlet extends HttpServlet {
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
 
-							Transform resize33=ImagesServiceFactory.makeCrop(0, 1375, 0, 125);
+							Transform resize33=ImagesServiceFactory.makeCrop(1, 1375, 1500, 125);
 							Image resizeImage331_5 = imagesService.applyTransform(resize33, blobImage);
 							
 							gcsService.createOrReplace(
