@@ -272,7 +272,8 @@ public class ImagesServlet extends HttpServlet {
 						
 
 						Image blobImage = ImagesServiceFactory.makeImageFromBlob(blobKey); // Create
-
+						String imageserveurl = imagesService.getServingUrl(blobKey);
+						System.out.println(imageserveurl);
 						// For Thumbnail
 						
 						
@@ -304,17 +305,10 @@ public class ImagesServlet extends HttpServlet {
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
 
-							Transform resize33=ImagesServiceFactory.makeCrop(1, 1375, 1500, 125);
-							Image resizeImage331_5 = imagesService.applyTransform(resize33, blobImage);
 							
-							gcsService.createOrReplace(
-									new GcsFilename(productDetailDestinationFolder[j],
-										objectName  + imageFormat + "_125x125"),
-									new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-									ByteBuffer.wrap(resizeImage331_5.getImageData()));
 							
 							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height );
-							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, resizeImage331_5);
+							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
 
 							// Write the transformed image back to a Cloud
 							// Storage object.
@@ -367,7 +361,7 @@ public class ImagesServlet extends HttpServlet {
 					    GcsFilename dest = new GcsFilename(movedFolder, imageName);
 					    gcsService.copy(source, dest);
 					    System.out.println("DESTINATION::::" + dest);
-					    gcsService.delete(source2);
+					    //gcsService.delete(source2);
 						
 						
 
