@@ -210,23 +210,28 @@ public class ImagesServlet extends HttpServlet {
 
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 		
-		ServletContext context2 = getServletContext();
-		//String imageUrl=imgPath;
-		URL resource2 = context2.getResource(imgPath);
-		File file2 = null;
+		URL url3 = new URL(imgPath);
+		File f = new File(url3.getFile());
+		
+		imageBytes1 = Files.readAllBytes(f.toPath());
+		
+// 		ServletContext context2 = getServletContext();
+// 		//String imageUrl=imgPath;
+// 		URL resource2 = context2.getResource(imgPath);
+// 		File file2 = null;
 
-		try {
-			file2 = new File(resource2.toURI());
-		} catch (Exception e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} 
-		FileInputStream fileInputStream2 = new FileInputStream(file2);
-		FileChannel fileChannel2 = fileInputStream2.getChannel();
-		ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
-		fileChannel2.read(byteBuffer2);
+// 		try {
+// 			file2 = new File(resource2.toURI());
+// 		} catch (Exception e2) {
+// 			// TODO Auto-generated catch block
+// 			e2.printStackTrace();
+// 		} 
+// 		FileInputStream fileInputStream2 = new FileInputStream(file2);
+// 		FileChannel fileChannel2 = fileInputStream2.getChannel();
+// 		ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
+// 		fileChannel2.read(byteBuffer2);
 
-		imageBytes1 = byteBuffer2.array();
+// 		imageBytes1 = byteBuffer2.array();
 		
 		Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
 		Transform resizee = ImagesServiceFactory.makeResize(100, 50);
