@@ -81,6 +81,8 @@ public class ImagesServlet extends HttpServlet {
 	String sourceImageBannerFolder = null;
 	byte[] imageBytes1 = null;
 	//String imgPath = "https://storage.googleapis.com/leykart-images/"; 
+	String imgPath = "http://lh3.googleusercontent.com/zMgX5Rf4xjKM0lJwgmm2-CdFbWcMocHyokhtfKeQLzOiValCZoweXmmfdZ6fNHHVU9ZGyCCn8mkBzIqrTpjg0KExWPKc"; 
+
 
 	// [START gcs]
 
@@ -207,6 +209,36 @@ public class ImagesServlet extends HttpServlet {
 		}
 
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
+		
+		ServletContext context2 = getServletContext();
+		//String imageUrl=imgPath;
+		URL resource2 = context2.getResource(imgPath);
+		File file2 = null;
+
+		try {
+			file2 = new File(resource2.toURI());
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} 
+		FileInputStream fileInputStream2 = new FileInputStream(file2);
+		FileChannel fileChannel2 = fileInputStream2.getChannel();
+		ByteBuffer byteBuffer2 = ByteBuffer.allocate((int) fileChannel2.size());
+		fileChannel2.read(byteBuffer2);
+
+		imageBytes1 = byteBuffer2.array();
+		
+		Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
+		Transform resizee = ImagesServiceFactory.makeResize(100, 50);
+		
+		Image resizedImagee = imagesService.applyTransform(resizee, imagee);
+
+		// Write the transformed image back to a Cloud Storage
+		// object.
+		gcsService.createOrReplace(new GcsFilename(bucket, "resizedImage_100X50"+ ".png"),
+				new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
+				ByteBuffer.wrap(resizedImagee.getImageData()));
+		
 
 		if (null == bucketContents) {
 			System.out.println("There were no objects in the given bucket; try adding some and re-running.");
