@@ -82,7 +82,7 @@ public class ImagesServlet extends HttpServlet {
 	byte[] imageBytes1 = null;
 	//String imgPath = "https://storage.googleapis.com/leykart-images/"; 
 	String imgPath = "http://lh3.googleusercontent.com/zMgX5Rf4xjKM0lJwgmm2-CdFbWcMocHyokhtfKeQLzOiValCZoweXmmfdZ6fNHHVU9ZGyCCn8mkBzIqrTpjg0KExWPKc"; 
-
+	String TEST_FILENAME = "URL.txt";
 
 	// [START gcs]
 
@@ -130,6 +130,39 @@ public class ImagesServlet extends HttpServlet {
 
 		return results;
 	}
+	
+	
+	// [START upload_stream]
+	  /**
+	   * Uploads data to an object in a bucket.
+	   *
+	   * @param name the name of the destination object.
+	   * @param contentType the MIME type of the data.
+	   * @param file the file to upload.
+	   * @param bucketName the name of the bucket to create the object in.
+	   */
+	  public static void uploadFile(
+	      String name, String contentType, File file, String bucketName)
+	      throws IOException, GeneralSecurityException {
+	    InputStreamContent contentStream = new InputStreamContent(
+	        contentType, new FileInputStream(file));
+	    // Setting the length improves upload performance
+	    contentStream.setLength(file.length());
+	    StorageObject objectMetadata = new StorageObject()
+	        // Set the destination object name
+	        .setName(name)
+	        // Set the access control list to publicly read-only
+	        .setAcl(Arrays.asList(
+	            new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
+
+	    // Do the insert
+	    Storage client = StorageFactory.getService();
+	    Storage.Objects.Insert insertRequest = client.objects().insert(
+	        bucketName, objectMetadata, contentStream);
+
+	    insertRequest.execute();
+	  }
+	  // [END upload_stream]
 
 	@SuppressWarnings("resource")
 	@Override
@@ -210,10 +243,10 @@ public class ImagesServlet extends HttpServlet {
 
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 		
-		URL url3 = new URL(imgPath);
-		File f = new File(url3.getFile());
+		//URL url3 = new URL(imgPath);
+		//File f = new File(url3.getFile());
 		
-		imageBytes1 = Files.readAllBytes(f.toPath());
+		//imageBytes1 = Files.readAllBytes(f.toPath());
 		
 // 		ServletContext context2 = getServletContext();
 // 		//String imageUrl=imgPath;
@@ -233,16 +266,16 @@ public class ImagesServlet extends HttpServlet {
 
 // 		imageBytes1 = byteBuffer2.array();
 		
-		Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
-		Transform resizee = ImagesServiceFactory.makeResize(100, 50);
+		//Image imagee = ImagesServiceFactory.makeImage(imageBytes1);
+		//Transform resizee = ImagesServiceFactory.makeResize(100, 50);
 		
-		Image resizedImagee = imagesService.applyTransform(resizee, imagee);
+		//Image resizedImagee = imagesService.applyTransform(resizee, imagee);
 
 		// Write the transformed image back to a Cloud Storage
 		// object.
-		gcsService.createOrReplace(new GcsFilename(bucket, "resizedImage_100X50"+ ".png"),
-				new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-				ByteBuffer.wrap(resizedImagee.getImageData()));
+		//gcsService.createOrReplace(new GcsFilename(bucket, "resizedImage_100X50"+ ".png"),
+				//new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
+				//ByteBuffer.wrap(resizedImagee.getImageData()));
 		
 
 		if (null == bucketContents) {
@@ -310,10 +343,23 @@ public class ImagesServlet extends HttpServlet {
 
 						Image blobImage = ImagesServiceFactory.makeImageFromBlob(blobKey); // Create
 						String imageserveurl = imagesService.getServingUrl(blobKey);
-						System.out.println(imageserveurl);
+						System.out.println(objectName + " ::::>>> " + imageserveurl);
+					
+						//Create a temp file to upload
+						Path tempPath = Files.createTempFile("URL_FILE",
+						"txt");
+						 Files.write(tempPath, imageserveurl.getBytes());
+						 File tempFile = tempPath.toFile();
+						 tempFile.deleteOnExit();
+
+						 try {
+							uploadFile(TEST_FILENAME, "image/png", tempFile,bucket);
+						} catch (GeneralSecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 						// For Thumbnail
-						
-						
 						for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
 
 							int width = Integer.parseInt(thumbnail[i]);
@@ -344,7 +390,7 @@ public class ImagesServlet extends HttpServlet {
 
 							
 							
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height );
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height , true);
 							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
 
 							// Write the transformed image back to a Cloud
