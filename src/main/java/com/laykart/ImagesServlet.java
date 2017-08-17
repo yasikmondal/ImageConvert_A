@@ -346,7 +346,7 @@ public class ImagesServlet extends HttpServlet {
 						System.out.println(objectName + " ::::>>> " + imageserveurl);
 					
 						//Create a temp file to upload
-						Path tempPath = Files.createTempFile("URL_FILE",
+						/*Path tempPath = Files.createTempFile("URL_FILE",
 						"txt");
 						 Files.write(tempPath, imageserveurl.getBytes());
 						 File tempFile = tempPath.toFile();
@@ -357,7 +357,7 @@ public class ImagesServlet extends HttpServlet {
 						} catch (GeneralSecurityException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						} */
 					
 						// For Thumbnail
 						for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
