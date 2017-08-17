@@ -390,7 +390,7 @@ public class ImagesServlet extends HttpServlet {
 
 							
 							
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height , true);
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height , false);
 							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, blobImage);
 
 							// Write the transformed image back to a Cloud
