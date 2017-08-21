@@ -394,69 +394,7 @@ public class ImagesServlet extends HttpServlet {
 							i++;
 						}
 				
-				// For Product Small
 				
-				
-							BlobstoreService blobstoreService1 = BlobstoreServiceFactory.getBlobstoreService();
-							BlobKey blobKeyProductSmall = blobstoreService1.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
-																															// a
-							
-
-							Image blobImageProductSmall = ImagesServiceFactory.makeImageFromBlob(blobKeyProductSmall); // Create
-							String imageserveurl1 = imagesService.getServingUrl(blobKeyProductSmall);
-							System.out.println(objectName + " ::::>>> " + imageserveurl1);
-								
-							for (int i = 0, j = 0; i < productSmall.length; i++, j++) {
-
-								int width = Integer.parseInt(productSmall[i]);
-								int height = Integer.parseInt(productSmall[i + 1]);
-								System.out.println(width + "X" + height);
-
-								Transform resize2x = ImagesServiceFactory.makeResize(width, height);
-								Image resizeImage2 = imagesService.applyTransform(resize2x, blobImageProductSmall);
-
-								// Write the transformed image back to a Cloud
-								// Storage object.
-								gcsService.createOrReplace(
-										new GcsFilename(productSmallDestinationFolder[j],
-												objectName + imageFormat ),
-										new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-										ByteBuffer.wrap(resizeImage2.getImageData()));
-
-								i++;
-							}
-						
-					// For Thumbnail
-				
-				
-							BlobstoreService blobstoreService2 = BlobstoreServiceFactory.getBlobstoreService();
-							BlobKey blobKeyThumbnail = blobstoreService2.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
-																															// a
-							
-
-							Image blobImageThumbnail = ImagesServiceFactory.makeImageFromBlob(blobKeyThumbnail); // Create
-							String imageserveurl2 = imagesService.getServingUrl(blobKeyThumbnail);
-							System.out.println(objectName + " ::::>>> " + imageserveurl2);
-								
-							for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
-
-								int width = Integer.parseInt(thumbnail[i]);
-								int height = Integer.parseInt(thumbnail[i + 1]);
-								System.out.println(width + "X" + height);
-
-								Transform resize1 = ImagesServiceFactory.makeResize(width, height);
-								Image resizeImage1 = imagesService.applyTransform(resize1, blobImageThumbnail);
-
-								// Write the transformed image back to a Cloud
-								// Storage object.
-								gcsService.createOrReplace(
-										new GcsFilename(thumbnailDestinationFolder[j],
-												objectName  + imageFormat),
-										new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
-										ByteBuffer.wrap(resizeImage1.getImageData()));
-
-								i++;
-							}
 							
 				// For moving Original Image
 							String imageName = object.getName();
