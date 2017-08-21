@@ -448,12 +448,7 @@ public class ImagesServlet extends HttpServlet {
 						}
 
 						
-						BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-						BlobKey blobKeyBanner = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); 
-																														
-						
-
-						Image blobImageBanner = ImagesServiceFactory.makeImageFromBlob(blobKeyBanner); 	
+						 	
 																										
 
 						// For banner
@@ -463,6 +458,12 @@ public class ImagesServlet extends HttpServlet {
 							int width = Integer.parseInt(banner[i]);
 							int height = Integer.parseInt(banner[i + 1]);
 							System.out.println(width + "X" + height);
+							BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+						BlobKey blobKeyBanner = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); 
+																														
+						
+
+						Image blobImageBanner = ImagesServiceFactory.makeImageFromBlob(blobKeyBanner);
 
 							Transform resize3xx = ImagesServiceFactory.makeResize(width, height);
 							Image resizeImage33 = imagesService.applyTransform(resize3xx, blobImageBanner);
