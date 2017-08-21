@@ -214,27 +214,27 @@ public class ImagesServlet extends HttpServlet {
 			System.out.println(movedFolderBanner);
 			
 
-			String thumbnailDestinationFolderString = properties.getProperty("thumbnailDestinationFolder");
-			System.out.println(thumbnailDestinationFolderString);
-			thumbnailDestinationFolder = thumbnailDestinationFolderString.split(",");
+			//String thumbnailDestinationFolderString = properties.getProperty("thumbnailDestinationFolder");
+			//System.out.println(thumbnailDestinationFolderString);
+			//thumbnailDestinationFolder = thumbnailDestinationFolderString.split(",");
 
 			String productDetailDestinationFolderString = properties.getProperty("productDetailDestinationFolder");
 			productDetailDestinationFolder = productDetailDestinationFolderString.split(",");
 
-			String productSmallDestinationFolderString = properties.getProperty("productSmallDestinationFolder");
-			productSmallDestinationFolder = productSmallDestinationFolderString.split(",");
+			//String productSmallDestinationFolderString = properties.getProperty("productSmallDestinationFolder");
+			//productSmallDestinationFolder = productSmallDestinationFolderString.split(",");
 
 			String bannerDestinationFolderString = properties.getProperty("bannerDestinationFolder");
 			bannerDestinationFolder = bannerDestinationFolderString.split(",");
 
-			String thumbnailString = properties.getProperty("thumbnail");
-			thumbnail = thumbnailString.split(",");
+			//String thumbnailString = properties.getProperty("thumbnail");
+			//thumbnail = thumbnailString.split(",");
 
 			String productDetailString = properties.getProperty("productDetail");
 			productDetail = productDetailString.split(",");
 
-			String productSmallString = properties.getProperty("productSmall");
-			productSmall = productSmallString.split(",");
+			//String productSmallString = properties.getProperty("productSmall");
+			//productSmall = productSmallString.split(",");
 
 			String bannerString = properties.getProperty("banner");
 			banner = bannerString.split(",");
