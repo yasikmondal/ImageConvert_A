@@ -314,14 +314,14 @@ public class ImagesServlet extends HttpServlet {
 							//oe = OutputEncoding.JPEG;
 							}
 							
-							objectName = objectName.substring(15, (objectName.length() - 4));
+							objectName = objectName.substring(7, (objectName.length() - 4));
 							System.out.println(objectName);
 						} else if (objectName.endsWith(".jpeg")) {
 							
 							imageFormat = ".jpeg";
 							//oe = OutputEncoding.JPEG;
 							
-							objectName = objectName.substring(15, (objectName.length() - 5));
+							objectName = objectName.substring(7, (objectName.length() - 5));
 							System.out.println(objectName);
 						}
 					
@@ -461,10 +461,10 @@ public class ImagesServlet extends HttpServlet {
 				// For moving Original Image
 							String imageName = object.getName();
 							if (imageName.endsWith(".png") || imageName.endsWith(".jpg")) {
-								imageName = imageName.substring(15, (imageName.length()));
+								imageName = imageName.substring(7, (imageName.length()));
 								System.out.println(imageName);
 							} else if (imageName.endsWith(".jpeg")) {
-								imageName = imageName.substring(15, (imageName.length()));
+								imageName = imageName.substring(7, (imageName.length()));
 								System.out.println(imageName);
 							}
 							
