@@ -71,12 +71,10 @@ import com.google.appengine.tools.cloudstorage.RetryParams;
 public class ImagesServlet extends HttpServlet {
 
 	String bucket = null;
-	String ProductDetailsImageFolder = null;
-	String ProductSmallImageFolder = null;
-	String ThumbnailImageFolder = null;
-	String  movedFolderProductDetails = null;
-	String  movedFolderProductSmall = null;
-	String  movedFolderThumbnail = null;
+	String sourceImageFolder = null;
+	
+	String  movedFolder = null;
+	
 	
 	
 	String thumbnailDestinationFolder[] = null;
@@ -183,9 +181,8 @@ public class ImagesServlet extends HttpServlet {
 		String[] banner = null;
 		String[] sourceFolder = null;
 		String imageFormat = null;
-		String imageFormat3 = null;
-		String imageFormat4 = null;
 		String imageFormat2 = null;
+		
 		//OutputEncoding oe = null;
 		
 		Date startDate = new Date();
@@ -200,25 +197,18 @@ public class ImagesServlet extends HttpServlet {
 			bucket = properties.getProperty("bucket");
 			System.out.println(bucket);
 			
-			ProductDetailsImageFolder = properties.getProperty("ProductDetailsImageFolder");
-			System.out.println(ProductDetailsImageFolder);
+			sourceImageFolder = properties.getProperty("sourceImageFolder");
+			System.out.println(sourceImageFolder);
 			
-			ProductSmallImageFolder = properties.getProperty("ProductSmallImageFolder");
-			System.out.println(ProductSmallImageFolder);
 			
-			ThumbnailImageFolder = properties.getProperty("ThumbnailImageFolder");
-			System.out.println(ThumbnailImageFolder);
 			
 			
 			sourceImageBannerFolder = properties.getProperty("sourceImageBannerFolder");
 			System.out.println(sourceImageBannerFolder);
 			
-			movedFolderProductDetails = properties.getProperty("movedFolderProductDetails");
-			System.out.println(movedFolderProductDetails);
-			movedFolderProductSmall = properties.getProperty("movedFolderProductSmall");
-			System.out.println(movedFolderProductSmall);
-			movedFolderThumbnail = properties.getProperty("movedFolderThumbnail");
-			System.out.println(movedFolderThumbnail);
+			movedFolder = properties.getProperty("movedFolder");
+			System.out.println(movedFolder);
+			
 			
 			movedFolderBanner = properties.getProperty("movedFolderBanner");
 			System.out.println(movedFolderBanner);
@@ -308,7 +298,7 @@ public class ImagesServlet extends HttpServlet {
 				
 				String path = object.getName();
 				System.out.println("**********" + path);
-				if (path.startsWith(ProductDetailsImageFolder)) {
+				if (path.startsWith(sourceImageFolder)) {
 				if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
 						
 						String objectName = object.getName();
@@ -403,68 +393,18 @@ public class ImagesServlet extends HttpServlet {
 
 							i++;
 						}
-						String imageName = object.getName();
-						if (imageName.endsWith(".png") || imageName.endsWith(".jpg")) {
-							imageName = imageName.substring(15, (imageName.length()));
-							System.out.println(imageName);
-						} else if (imageName.endsWith(".jpeg")) {
-							imageName = imageName.substring(15, (imageName.length()));
-							System.out.println(imageName);
-						}
-						
-					GcsFilename sourceProductDetails = new GcsFilename(bucket, object.getName());
-						GcsFilename sourceProductDetails2 = new GcsFilename(bucket + "/"+ ProductDetailsImageFolder , imageName);
-					    System.out.println("SOURCE::::" + sourceProductDetails);
-						System.out.println("SOURCE2::::" + sourceProductDetails2);
-					    GcsFilename dest = new GcsFilename(movedFolderProductDetails, imageName);
-					    gcsService.copy(sourceProductDetails, dest);
-					    System.out.println("DESTINATION::::" + dest);
-					    //gcsService.delete(source2);
-						
-						
-
-					}
-				}
 				
 				// For Product Small
 				
-				if (path.startsWith(ProductSmallImageFolder)) {
-					if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
-							
-							String objectName3 = object.getName();
-							
-							if (objectName3.endsWith(".png") || objectName3.endsWith(".jpg")) {
-								
-								if(objectName3.endsWith(".png")){
-								imageFormat3 = ".png";
-								//oe = OutputEncoding.PNG;
-								}
-								if(objectName3.endsWith(".jpg")){
-								imageFormat3 = ".jpg";
-								//oe = OutputEncoding.JPEG;
-								}
-								
-								objectName3 = objectName3.substring(13, (objectName3.length() - 4));
-								System.out.println(objectName3);
-							} else if (objectName3.endsWith(".jpeg")) {
-								
-								imageFormat3 = ".jpeg";
-								//oe = OutputEncoding.JPEG;
-								
-								objectName3 = objectName3.substring(13, (objectName3.length() - 5));
-								System.out.println(objectName3);
-							}
-						
-						
-							System.out.println("Test3");
-							BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-							BlobKey blobKeyProductSmall = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
+				
+							BlobstoreService blobstoreService1 = BlobstoreServiceFactory.getBlobstoreService();
+							BlobKey blobKeyProductSmall = blobstoreService1.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
 																															// a
 							
 
 							Image blobImageProductSmall = ImagesServiceFactory.makeImageFromBlob(blobKeyProductSmall); // Create
-							String imageserveurl = imagesService.getServingUrl(blobKeyProductSmall);
-							System.out.println(objectName3 + " ::::>>> " + imageserveurl);
+							String imageserveurl1 = imagesService.getServingUrl(blobKeyProductSmall);
+							System.out.println(objectName + " ::::>>> " + imageserveurl1);
 								
 							for (int i = 0, j = 0; i < productSmall.length; i++, j++) {
 
@@ -479,74 +419,24 @@ public class ImagesServlet extends HttpServlet {
 								// Storage object.
 								gcsService.createOrReplace(
 										new GcsFilename(productSmallDestinationFolder[j],
-												objectName3 + imageFormat3 ),
+												objectName + imageFormat ),
 										new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 										ByteBuffer.wrap(resizeImage2.getImageData()));
 
 								i++;
 							}
-							String imageName3 = object.getName();
-							if (imageName3.endsWith(".png") || imageName3.endsWith(".jpg")) {
-								imageName3 = imageName3.substring(13, (imageName3.length()));
-								System.out.println(imageName3);
-							} else if (imageName3.endsWith(".jpeg")) {
-								imageName3 = imageName3.substring(13, (imageName3.length()));
-								System.out.println(imageName3);
-							}
-							
-						GcsFilename sourceProductSmall = new GcsFilename(bucket, object.getName());
-							GcsFilename sourceProductSmall2 = new GcsFilename(bucket + "/"+ ProductSmallImageFolder , imageName3);
-						    System.out.println("SOURCE::::" + sourceProductSmall);
-							System.out.println("SOURCE2::::" + sourceProductSmall2);
-						    GcsFilename dest = new GcsFilename(movedFolderProductSmall, imageName3);
-						    gcsService.copy(sourceProductSmall, dest);
-						    System.out.println("DESTINATION::::" + dest);
-						    //gcsService.delete(source2);
-							
-							
-
-						}
-					}
-				
+						
 					// For Thumbnail
 				
-				if (path.startsWith(ThumbnailImageFolder)) {
-					if (("image/png".equals(object.getContentType())) || ("image/jpeg".equals(object.getContentType()))) {
-							
-							String objectName4 = object.getName();
-							
-							if (objectName4.endsWith(".png") || objectName4.endsWith(".jpg")) {
-								
-								if(objectName4.endsWith(".png")){
-								imageFormat4 = ".png";
-								//oe = OutputEncoding.PNG;
-								}
-								if(objectName4.endsWith(".jpg")){
-									imageFormat4 = ".jpg";
-								//oe = OutputEncoding.JPEG;
-								}
-								
-								objectName4 = objectName4.substring(10, (objectName4.length() - 4));
-								System.out.println(objectName4);
-							} else if (objectName4.endsWith(".jpeg")) {
-								
-								imageFormat4 = ".jpeg";
-								//oe = OutputEncoding.JPEG;
-								
-								objectName4 = objectName4.substring(10, (objectName4.length() - 5));
-								System.out.println(objectName4);
-							}
-						
-						
-							System.out.println("Test3");
-							BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-							BlobKey blobKeyThumbnail = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
+				
+							BlobstoreService blobstoreService2 = BlobstoreServiceFactory.getBlobstoreService();
+							BlobKey blobKeyThumbnail = blobstoreService2.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
 																															// a
 							
 
 							Image blobImageThumbnail = ImagesServiceFactory.makeImageFromBlob(blobKeyThumbnail); // Create
-							String imageserveurl = imagesService.getServingUrl(blobKeyThumbnail);
-							System.out.println(objectName4 + " ::::>>> " + imageserveurl);
+							String imageserveurl2 = imagesService.getServingUrl(blobKeyThumbnail);
+							System.out.println(objectName + " ::::>>> " + imageserveurl2);
 								
 							for (int i = 0, j = 0; i < thumbnail.length; i++, j++) {
 
@@ -561,34 +451,35 @@ public class ImagesServlet extends HttpServlet {
 								// Storage object.
 								gcsService.createOrReplace(
 										new GcsFilename(thumbnailDestinationFolder[j],
-												objectName4  + imageFormat4),
+												objectName  + imageFormat),
 										new GcsFileOptions.Builder().mimeType("image/jpeg").build(),
 										ByteBuffer.wrap(resizeImage1.getImageData()));
 
 								i++;
 							}
-							String imageName4 = object.getName();
-							if (imageName4.endsWith(".png") || imageName4.endsWith(".jpg")) {
-								imageName4 = imageName4.substring(10, (imageName4.length()));
-								System.out.println(imageName4);
-							} else if (imageName4.endsWith(".jpeg")) {
-								imageName4 = imageName4.substring(10, (imageName4.length()));
-								System.out.println(imageName4);
+							
+				// For moving Original Image
+							String imageName = object.getName();
+							if (imageName.endsWith(".png") || imageName.endsWith(".jpg")) {
+								imageName = imageName.substring(15, (imageName.length()));
+								System.out.println(imageName);
+							} else if (imageName.endsWith(".jpeg")) {
+								imageName = imageName.substring(15, (imageName.length()));
+								System.out.println(imageName);
 							}
 							
-						GcsFilename sourceThumbnail = new GcsFilename(bucket, object.getName());
-							GcsFilename sourceThumbnail2 = new GcsFilename(bucket + "/"+ ThumbnailImageFolder , imageName4);
-						    System.out.println("SOURCE::::" + sourceThumbnail);
-							System.out.println("SOURCE2::::" + sourceThumbnail2);
-						    GcsFilename dest = new GcsFilename(movedFolderThumbnail, imageName4);
-						    gcsService.copy(sourceThumbnail, dest);
+						GcsFilename source = new GcsFilename(bucket, object.getName());
+							GcsFilename source2 = new GcsFilename(bucket + "/"+ sourceImageFolder , imageName);
+						    System.out.println("SOURCE::::" + source);
+							System.out.println("SOURCE2::::" + source2);
+						    GcsFilename dest = new GcsFilename(movedFolder, imageName);
+						    gcsService.copy(source, dest);
 						    System.out.println("DESTINATION::::" + dest);
-						    //gcsService.delete(source2);
+						    gcsService.delete(source2);
 							
 							
-
-						}
-					}
+				}
+				}
 				
 				//Start Banner Folder
 				//System.out.println("Type::::::::::::::::::: " + object.getContentType());
