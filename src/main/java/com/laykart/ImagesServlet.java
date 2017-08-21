@@ -346,13 +346,7 @@ public class ImagesServlet extends HttpServlet {
 						// and serving of large, immutable blobs to users.
 						System.out.println("Test3");
 						BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-						BlobKey blobKeyProductDetails = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
-																														// a
 						
-
-						Image blobImageProductDetails = ImagesServiceFactory.makeImageFromBlob(blobKeyProductDetails); // Create
-						String imageserveurl = imagesService.getServingUrl(blobKeyProductDetails);
-						System.out.println(objectName + " ::::>>> " + imageserveurl);
 					
 						//Create a temp file to upload
 						/*Path tempPath = Files.createTempFile("URL_FILE",
@@ -377,6 +371,13 @@ public class ImagesServlet extends HttpServlet {
 							int width = Integer.parseInt(productDetail[i]);
 							int height = Integer.parseInt(productDetail[i + 1]);
 							System.out.println(width + "X" + height);
+							BlobKey blobKeyProductDetails = blobstoreService.createGsBlobKey("/gs/" + bucket + "/" + object.getName()); // Creating
+																														// a
+						
+
+						Image blobImageProductDetails = ImagesServiceFactory.makeImageFromBlob(blobKeyProductDetails); // Create
+						//String imageserveurl = imagesService.getServingUrl(blobKeyProductDetails);
+						//System.out.println(objectName + " ::::>>> " + imageserveurl);
 
 							
 							Image  tempImg = blobImageProductDetails;
