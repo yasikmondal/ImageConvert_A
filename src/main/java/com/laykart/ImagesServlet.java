@@ -381,7 +381,7 @@ public class ImagesServlet extends HttpServlet {
 
 							
 							Image  tempImg = blobImageProductDetails;
-							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height);
+							Transform resize_1_5 = ImagesServiceFactory.makeResize(width, height, true);
 							Image resizeImage1_5 = imagesService.applyTransform(resize_1_5, tempImg);
 
 							// Write the transformed image back to a Cloud
@@ -465,7 +465,7 @@ public class ImagesServlet extends HttpServlet {
 
 						Image blobImageBanner = ImagesServiceFactory.makeImageFromBlob(blobKeyBanner);
 
-							Transform resize3xx = ImagesServiceFactory.makeResize(width, height);
+							Transform resize3xx = ImagesServiceFactory.makeResize(width, height, true);
 							Image resizeImage33 = imagesService.applyTransform(resize3xx, blobImageBanner);
 
 							// Write the transformed image back to a Cloud
